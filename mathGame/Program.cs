@@ -5,42 +5,49 @@ Menu(name);
 
 void Menu(string? name)
 {
+    bool isGameOn = true;
+
+    do
+    {
+    Console.Clear();
     Console.WriteLine("-----------------------------------------------------------------------------------");
     Console.WriteLine($"hello {name?.ToUpper()} its {date.DayOfWeek}\n");
     Console.WriteLine(@"What would you like to play today? choose from the option below:
-    A - Addition
-    S - Subtract
-    M - Multiply
-    D - Divide
-    Q - Quit");
+        A - Addition
+        S - Subtract
+        M - Multiply
+        D - Divide
+        Q - Quit"
+    );
 
     Console.WriteLine("-----------------------------------------------------------------------------------");
 
     string? gameOptions = Console.ReadLine();
     string? gameSelected = gameOptions?.Trim().ToLower();
 
-    switch (gameSelected)
-    {
-        case "a":
-            AdditionGame("Addition game");
-            break;
-        case "s":
-            SubtractionGame("Subtraction game");
-            break;
-        case "m":
-            MultiplyGame("multiply game");
-            break;
-        case "d":
-            DivisionGame("division game");
-            break;
-        case "q":
-            Console.WriteLine("Quitting...goodbye");
-            Environment.Exit(1);
-            break;
-        default:
-            Console.WriteLine("Thats not an option try again");
-            break;
-    }
+        switch (gameSelected)
+        {
+            case "a":
+                AdditionGame("Addition game");
+                break;
+            case "s":
+                SubtractionGame("Subtraction game");
+                break;
+            case "m":
+                MultiplyGame("multiply game");
+                break;
+            case "d":
+                DivisionGame("division game");
+                break;
+            case "q":
+                Console.WriteLine("Quitting...goodbye");
+                isGameOn = false;
+                break;
+            default:
+                Console.WriteLine("Invalid option");
+                break;
+        }
+    } while(isGameOn);
 }
 
 void AdditionGame(string message)
@@ -66,20 +73,21 @@ void AdditionGame(string message)
 
         if(int.Parse(result) == firstNumber + secondNumber)
         {
-            Console.WriteLine("Correct! press any key for the next question.");
+            Console.WriteLine("Correct! press enter key for the next question.");
             score ++;
             Console.ReadLine();
         }
         else
         {
-            Console.WriteLine("wrong answer! press any key for the next question.");
+            Console.WriteLine("wrong answer! press enter key for the next question.");
             Console.ReadLine();
 
         }
 
         if(i == 4)
         {
-            Console.WriteLine($"Game over, here is your {score}");
+            Console.WriteLine($"Game over, you scored: {score} press enter key to go back to main menu");
+            Console.ReadLine();
         }
     }
 }
