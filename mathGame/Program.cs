@@ -1,6 +1,8 @@
 ﻿string? name = GetName();
 DateTime date = DateTime.UtcNow;
 
+var games = new List<string>();
+
 Menu(name);
 
 void Menu(string? name)
@@ -13,6 +15,7 @@ void Menu(string? name)
     Console.WriteLine("-----------------------------------------------------------------------------------");
     Console.WriteLine($"hello {name?.ToUpper()} its {date.DayOfWeek}\n");
     Console.WriteLine(@"What would you like to play today? choose from the option below:
+        V - View previous Score
         A - Addition
         S - Subtract
         M - Multiply
@@ -27,6 +30,9 @@ void Menu(string? name)
 
         switch (gameSelected)
         {
+            case "v":
+                GetGames();
+                break;
             case "a":
                 AdditionGame("Addition game");
                 break;
@@ -48,6 +54,21 @@ void Menu(string? name)
                 break;
         }
     } while(isGameOn);
+}
+
+void GetGames()
+{
+    Console.Clear();
+    Console.WriteLine("Games History");
+    Console.WriteLine("---------------------------");
+
+    foreach(var game in games)
+    {
+        Console.WriteLine($"{game}");
+    }
+    Console.WriteLine("---------------------------");
+    Console.WriteLine("Press enter to return to Main menu");
+    Console.ReadLine();
 }
 
 void AdditionGame(string message)
@@ -90,7 +111,11 @@ void AdditionGame(string message)
             Console.ReadLine();
         }
     }
+
+    AddToHistory(score, "Addition");
 }
+
+
 
 void SubtractionGame(string message)
 {
@@ -129,6 +154,7 @@ void SubtractionGame(string message)
             Console.WriteLine($"game over, your score is {score}");
         }
     }
+    AddToHistory(score, "Subtraction");
 }
 
 void MultiplyGame(string message)
@@ -167,6 +193,7 @@ void MultiplyGame(string message)
             Console.WriteLine($"Game over, your score is {score}");
         }
     }
+    AddToHistory(score, "Multiplication");
 }
 
 void DivisionGame(string message)
@@ -200,6 +227,7 @@ void DivisionGame(string message)
             Console.WriteLine($"Game over, your score is {score}");
         }
     }
+    AddToHistory(score, "Division");
 }
 
 static string? GetName()
@@ -210,6 +238,7 @@ static string? GetName()
 }
 
 int[] GetDivisionNumbers()
+
 {
     Random random = new Random();
 
@@ -228,4 +257,9 @@ int[] GetDivisionNumbers()
     result[1] = secondNumber;
 
     return result;
+}
+
+void AddToHistory(int score, string gameType )
+{
+    games.Add($"{DateTime.Now} - {gameType}: {score}");
 }
